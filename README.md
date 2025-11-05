@@ -7,7 +7,7 @@ AfyaMind is a Natural Language Processing (NLP) project that focuses on detectin
 In today’s digital environment, understanding the emotions embedded in written communication is essential for supporting mental health initiatives, social research, and digital wellness platforms.
 By classifying user text into emotion categories such as joy, sadness, anger, fear, and surprise, AfyaMind aims to improve emotional awareness and provide data-driven insights to help organizations respond empathetically and effectively.
 
-# 1 Business Understanding 
+# 1. Business Understanding 
 
 Business Problem: Mental health and digital communication platforms lack automated tools that can accurately recognize emotions from text-based messages. This limits their ability to detect negative emotional patterns and provide timely interventions.
 
