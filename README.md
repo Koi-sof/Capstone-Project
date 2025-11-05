@@ -13,14 +13,9 @@ Business Problem: Mental health and digital communication platforms lack automat
 
 Business Objective: To build and evaluate a machine learning model that can automatically classify text into emotional categories using the GoEmotions dataset.
 
-Stakeholders:
+Stakeholders: Mental health professionals and wellness app developers who will use emotion insights for personalized care and engagement. Research institutions analyzing emotional trends and behaviors from text data.
 
-Mental health professionals and wellness app developers who will use emotion insights for personalized care and engagement.
-
-Research institutions analyzing emotional trends and behaviors from text data.
-
-Success Criteria:
-The main metric is the Macro F1-score, targeting a minimum of 0.75 or higher to ensure balanced performance across all emotion categories regardless of data imbalance.
+Success Criteria: The main metric is the Macro F1-score, targeting a minimum of 0.75 or higher to ensure balanced performance across all emotion categories regardless of data imbalance.
 
 
 
