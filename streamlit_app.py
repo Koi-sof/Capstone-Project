@@ -12,6 +12,21 @@ import json
 import os
 import re
 
+def set_background_image(image_url):
+    """Set background image for the app"""
+    css = f'<style>.stApp {{ background-image: url("{image_url}"); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed; background-blend-mode: overlay; background-color: rgba(255, 255, 255, 0.9); }} .main .block-container {{ background-color: rgba(255, 255, 255, 0.85); border-radius: 10px; padding: 2rem; margin-top: 1rem; }} .css-1d391kg {{ background-color: rgba(255, 255, 255, 0.95); }}</style>'
+    st.markdown(css, unsafe_allow_html=True)
+
+# Set background image
+background_url = "https://img.freepik.com/premium-photo/tree-with-human-brain-as-its-branches-adorned-with-flowers-butterflies-represents-concepts-selfcare-mental-health-positive-thinking-creative-mind-generative-ai_506134-42.jpg"
+set_background_image(background_url)
+
+# ===== ENHANCED HEADER WITH BETTER STYLING =====
+header_css = '<style>.afyamind-header { text-align: center; padding: 1rem; background: linear-gradient(135deg, rgba(46, 139, 87, 0.9), rgba(60, 179, 113, 0.8)); border-radius: 15px; margin-bottom: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 2px solid #2E8B57; } .afyamind-title { color: white; font-size: 3.5em !important; font-weight: bold; margin-bottom: 0.2rem !important; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); } .afyamind-subtitle { color: #F0FFF0; font-size: 1.3em !important; font-weight: 500; margin-top: 0 !important; opacity: 0.95; }</style>'
+
+st.markdown(header_css, unsafe_allow_html=True)
+st.markdown('<div class="afyamind-header"><h1 class="afyamind-title">🌿 AfyaMind</h1><p class="afyamind-subtitle">Kenyan Emotions Classifier and Mental Health Assistant</p></div>', unsafe_allow_html=True)
+
 # Define the custom class first
 class EmotionClassifierSKLearn:
     def __init__(self, model_path=None, max_len=128, threshold=0.5):
@@ -235,40 +250,46 @@ def get_mental_health_response(user_message, detected_emotions, use_api=True):
     # Fallback to rule-based responses
     return get_fallback_response(user_message, detected_emotions)
 
-st.title("AfyaMind - Kenyan Emotions Classifier and Mental Health Assistant")
-
 # Check if model is loaded
 if not hasattr(model, 'model') or model.model is None:
     st.error("Emotion classifier model could not be loaded. Some features may not work properly.")
 else:
     st.success("Emotion model loaded successfully!")
 
-# Sidebar configuration
-st.sidebar.subheader("API Configuration")
-use_api = st.sidebar.checkbox("Use DeepSeek API for Enhanced Responses", value=True)
+# Sidebar configuration with enhanced styling
+with st.sidebar:
+    sidebar_css = '<style>.sidebar-header { text-align: center; background: linear-gradient(135deg, #2E8B57, #3CB371); padding: 1rem; border-radius: 10px; color: white; margin-bottom: 1rem; }</style>'
 
-if 'deepseek_api_key' not in st.session_state:
-    st.session_state.deepseek_api_key = ""
+    st.markdown(sidebar_css, unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-header"><h2 style="margin: 0; color: white;">🌿 AfyaMind</h2><p style="margin: 0; font-size: 0.8em; opacity: 0.9;">Mental Wellness</p></div>', unsafe_allow_html=True)
 
-api_key_input = st.sidebar.text_input("DeepSeek API Key:", 
-                                     value="",
-                                     type="password",
-                                     placeholder="Enter your API key here")
+    st.markdown("---")
 
-if api_key_input:
-    st.session_state.deepseek_api_key = api_key_input
-    if api_key_input.strip() and api_key_input != "YOUR_DEEPSEEK_API_KEY_HERE":
-        st.sidebar.success("API Key configured!")
-    else:
-        st.sidebar.warning("Please enter a valid API key")
+    st.subheader("API Configuration")
+    use_api = st.sidebar.checkbox("Use DeepSeek API for Enhanced Responses", value=True)
 
-if use_api and (not st.session_state.deepseek_api_key or st.session_state.deepseek_api_key == "YOUR_DEEPSEEK_API_KEY_HERE"):
-    st.sidebar.warning("Enter DeepSeek API key for enhanced responses")
-    st.sidebar.info("Get free API key: https://platform.deepseek.com/")
+    if 'deepseek_api_key' not in st.session_state:
+        st.session_state.deepseek_api_key = ""
 
-# Navigation
-page = st.sidebar.selectbox("Choose a tool:", 
-                           ["Single Text Analysis", "Batch Analysis", "Mental Health Chatbot", "CSV Intervention Generator"])
+    api_key_input = st.sidebar.text_input("DeepSeek API Key:", 
+                                         value="",
+                                         type="password",
+                                         placeholder="Enter your API key here")
+
+    if api_key_input:
+        st.session_state.deepseek_api_key = api_key_input
+        if api_key_input.strip() and api_key_input != "YOUR_DEEPSEEK_API_KEY_HERE":
+            st.sidebar.success("API Key configured!")
+        else:
+            st.sidebar.warning("Please enter a valid API key")
+
+    if use_api and (not st.session_state.deepseek_api_key or st.session_state.deepseek_api_key == "YOUR_DEEPSEEK_API_KEY_HERE"):
+        st.sidebar.warning("Enter DeepSeek API key for enhanced responses")
+        st.sidebar.info("Get free API key: https://platform.deepseek.com/")
+
+    # Navigation
+    page = st.sidebar.selectbox("Choose a tool:", 
+                               ["Single Text Analysis", "Batch Analysis", "Mental Health Chatbot", "CSV Intervention Generator"])
 
 if page == "Single Text Analysis":
     st.header("Single Text Emotion Analysis")
