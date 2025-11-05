@@ -19,7 +19,8 @@ Success Criteria: The main metric is the Macro F1-score, targeting a minimum of 
 
 # 2. Data Understanding
 
-The dataset used for the AfyaMind project is publicly available via HuggingFace and includes text, emotion labels and metadata such as comment ID, subreddit, author and timestamp. The dataset comprises 58,009 Reddit comments annotated with 27 emotion categories and Neutral, sourced from Reddit. The emotions range from joy, sadness and anger to surprise, fear and love. 
+The dataset used for the AfyaMind project is publicly available via HuggingFace and includes text, emotion labels and metadata such as comment ID, subreddit, author and timestamp. 
+The dataset comprises 58,009 Reddit comments annotated with 27 emotion categories and Neutral, sourced from Reddit. The emotions range from joy, sadness and anger to surprise, fear and love. 
 The dataset was stored in CSV format and read into a panda DataFrame for analysis.
 
 
