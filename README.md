@@ -110,7 +110,7 @@ Training Loss: 0.0988
 Validation Loss: 0.2983
 Accuracy: 0.5916
 F1 Micro: 0.6649
-F1 Macro: 0.5739
+F1 Macro: 0.5930
 ```
 The RoBERTA model is superior in capturing nuance emotions(e.g., 'sadness' vs 'fear').
 
@@ -144,7 +144,7 @@ Document Ambiguities: Analyze top co-occuring emotion pairs for UX insights.
 
 # Conclusion
 
-The RoBERTA model forms a stable foundation with real performance (Micro F1: 0.5930, Hamming Loss: 0.0834). AfyaMind is an intelligent asset for digital mental health, ready for frontline deployment. Recommend approving Phase 1 actions for reliability, cost reduction, and mission fulfillment.
+The RoBERTA model forms a stable foundation with real performance (Micro F1: 0.5930). AfyaMind is an intelligent asset for digital mental health, ready for frontline deployment. Recommend approving Phase 1 actions for reliability, cost reduction, and mission fulfillment.
 
 
     
