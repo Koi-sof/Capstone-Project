@@ -1,31 +1,31 @@
 # Capstone-Project: AfyaMind Emotion Detection Project 
 Team: Simon Irungu, John Nyangoya, Eugene Mallah, Sophie Muchiri, Bob-lewis 
 
-#Project Overview
+# Project Overview
 
 The AfyaMind project develops an automated emotion detection model to classify text-based data into distinct emotion categories. This system supports mentah health professionals, researchers, and digital wellness organizations by identifying emotional states in written communication. It enables early interventions, empathetic responses, and large-scale emotional trend analysis.
 
-
-#Key Objectives:
-
-Build and evaluate a machine learning model for automatic text classification into emotional categories using the GoEmotions dataset.
-
-Explore and understand emotion distribution in the dataset.
-
-Compare baseline models with deep learning approaches.
-
-Evaluate models using multi-label classification metrics.
-
-Deploy the model on Streamlit and intergrate with intervention systems.
-
-Generate actionable insights for digital health and AI-driven emotional intelligence.
-
-#Success Criteria: Evaluated via performance metrics like macro F1-score and recall. Target: Macro F1-score >= 0.75 for balanced accuracy across emotion classes.
-
-
 # Business Understanding
+In the digital era, understanding emotions expressed in text is essential for enhancing user interactions, improving customer support, and analyzing public sentiment. This project details the end-to-end process: from essential text preprocessing and exploratory data analysis (EDA) to the implementation and optimization of a deep learning model. Crucially, the focus here is on multi-label classification, moving beyond binary sentiment to capture the subtle complexity of human communication, where emotions like 'confusion' and 'excitement' can coexist. The resulting system, deployed via a Streamlit application, transforms raw text into actionable emotional profiles, enabling personalized and context-aware responses, as well as application to a mental health chatbot known as `AfyaMind.`
 
-The project aims to create a robust emotion detection system for real-world applications in mental health. By analyzing text from sources like Reddit comments, it identifies emotions to inform strategies in digital wellness.
+# Objectives:
+
+*Main Objective:* To build and evaluate a machine learning model that can automatically classify text into emotional categories using the GoEmotions dataset.
+
+*Specific Objectives*
+
+To explore and understand the distribution of emotions in the GoEmotions dataset.
+
+To transform textual data into numerical form using techniques such as TF-IDF, or contextual embeddings (e.g., BERT).
+
+To build and compare baseline models (e.g., Logistic Regression, Random Forest, Naive Bayes) with deep learning models (e.g., BERT).
+
+To evaluate models using metrics appropriate for multi-label classification (e.g., F1-score, Precision, Recall)
+
+To deploy the model on Streamlit and intergrate it with an existing model to provide intervention.
+
+*Success Criteria:* Evaluated via performance metrics like macro F1-score and recall. Target: Macro F1-score >= 0.75 for balanced accuracy across emotion classes.
+
 
 # Data Understanding
 
@@ -33,25 +33,25 @@ The dataset is the publicly available GoEmotions from Hugging Face, consisting o
 
 Dataset Structure:
 
-Format: CSV, loaded into Pandas DataFrame.
-Columns: 'text', 'emotion', metadata(e.g., comment ID, subreddit, author, timestamp).
-Rows: Each represents a labeled text instance.
-Label Distribution: Common emotions like 'joy' and 'sadness' dominate; rarer ones like 'fear' and 'suprise' are underrepresented.
-Volume: Thousands of entries, suitable for ML and DL models.
-
-Exploratory Data Analysis (EDA) Insights:
-
-#Variations in spelling, abbreviations, slang.
-#Emojis, symbols, and varying text lengths (single words to multi-sentence)
-#Class Imbalance across emotions.
-
+- Format: CSV, loaded into Pandas DataFrame.
+- Columns: 'text', 'emotion', metadata(e.g., comment ID, subreddit, author, timestamp).
+- Rows: Each represents a labeled text instance.
+- Label Distribution: Common emotions like 'joy' and 'sadness' dominate; rarer ones like 'fear' and 'suprise' are underrepresented.
 
 Data Quality Checks:
 
-#No null/empty values in key columns.
-#Removed Duplicates
-#Varified labels against predifined categories
-#Sampled texts for labeling accuracy
+- No null/empty values in key columns.
+- Removed Duplicates
+- Verified labels against predifined categories
+- Sampled texts for labeling accuracy
+
+## Important Visualizations
+
+<img width="813" height="479" alt="image" src="https://github.com/user-attachments/assets/facba704-5a42-4064-b5bd-bfd383cbe0da" />
+
+<img width="819" height="448" alt="image" src="https://github.com/user-attachments/assets/94aedfb7-45b2-474a-950c-70dbad6388aa" />
+
+<img width="819" height="501" alt="image" src="https://github.com/user-attachments/assets/fffb2aba-d16c-48b4-a940-8bc09c939ef8" />
 
 
 # Data Preparation
@@ -60,80 +60,71 @@ This phase transformed raw text into model-ready formats for consistency and per
 
 Key Steps:
 
-Text Cleaning: Lowercased text; removed special characters, digits, URLs, punctuation via regex; expanded constractions; trimmed whitespace.
+- Text Cleaning: Lowercased text; removed special characters, digits, URLs, punctuation via regex; expanded constractions; trimmed whitespace.
 
-Tokenization: Used NLTK word tokenizer for classical models; Hugging Face tokenizer for transformers.
+- Tokenization: Used NLTK word tokenizer for classical models; Hugging Face tokenizer for transformers.
 
-Stopword Removal: Eliminated common words (e.g., 'and', 'the', 'is') to reduce noise.
+- Stopword Removal: Eliminated common words (e.g., 'and', 'the', 'is') to reduce noise.
 
-Lemmatization: Reduced words to base forms using WordNetLemmatizer.
+- Lemmatization: Reduced words to base forms using WordNetLemmatizer.
 
-Label Encoding: Converted emotions to intergers via scikit-learn's LabelEncoder.
+- Feature Extraction: TF-IDF vectorization for classical models and token embeddings (IDs, attention masks) for transformers like RoBERTa.
 
-Feature Extraction:
+- Handling Missing Data: Dropped entries with missing labels; imputed auxialiary columns with median/mode.
 
-    TF-IDF vectorization for classical models
+- Train-Test Split: 80/20 stratified split to preserve class proportions.
 
-    Token embeddings (IDs, attention masks) for transformers like RoBERTa.
+# Modelling
 
-Handling Missing Data: Dropped entries with missing labels; imputed auxialiary columns with median/mode.
-
-Class Imbalance Mitigation: SMOTE for classical models; weighted loss for transformers.
-
-Train-Test Split: 80/20 stratified split to preserve class proportions.
-
-Verification: Checked feature matrix dimensions post-processing.
-
-
-#Modeling Approaches
-
-Baseline: Classical Machine Learning Models
+## Baseline: Classical Machine Learning Models
 
 These provided benchmarks using feature engineering (e.g., TF-IDF)
 
-#Logistic Regression:   Tuned with GridSearchCV (C, solver, iterations); wrapped in MultiOutputClassifier for multi-label.
+Logistic Regression: Wrapped in MultiOutputClassifier for multi-label.
 
-#Linear Support Vector Classifier (SVC): Optimal hyperplane with class weights; best baseline (Micro F1: 0.5532)
+Linear Support Vector Classifier (SVC): Optimal hyperplane with class weights; best baseline (Micro F1: 0.5532)
 
-#Support Vector Machine (SVM): Linear Kernel, adjusted weights for minorities
+Support Vector Machine (SVM): Linear Kernel, adjusted weights for minorities
 
-#Naive Bayes: Probabilistic, independent features; fast but minimal complexity.
+Multinomial Naive Bayes: Probabilistic, independent features; fast but minimal complexity.
+```
+--- Final Weighted Model Comparison ---
+                 F1 Score (Weighted)  Precision (Weighted)  Recall (Weighted)
+SVC Weighted                  0.5530                0.6801             0.4894
+LogReg Weighted               0.5212                0.7435             0.4352
 
-Final Solution: Deep Learning Model
+Best performing model: SVC Weighted
+Best F1 score: 0.5530
+```
+The Linear SVC with weighted classes performed the best. This provided a baseline that our Deep Learning model had to surpass 
 
-#BERT (Bidirectional Encoder Representations from Transformers): Fine-tuned on 7-label dataset; excels in contextual understanding.
+## Deep Learning Model
 
-        Achieved highest performance (Micro F1: 0.5930, Hamming Loss: 0.0834)
+RoBERTA (Robustly Optimized BERT Pretraining Approach). RoBERTA's ability to understand the deep, bidirectional context of language allows it to capture subtle emotional nuances that simpler models miss, leading to a substantial gain in overall effectiveness.
 
-        Selected for deployment due to nuance capture.
-
-
+```
+Final Model Performance (7 epochs):
+Training Loss: 0.0988
+Validation Loss: 0.2983
+Accuracy: 0.5916
+F1 Micro: 0.6649
+F1 Macro: 0.5739
+```
+The RoBERTA model is superior in capturing nuance emotions(e.g., 'sadness' vs 'fear').
 
 # Model Implementation and Evaluation
 
-Evaluated using accuracy, precision, recall, F1-score (macro-averaged for imbalance), and confusion matrices.
+<img width="411" height="317" alt="image" src="https://github.com/user-attachments/assets/4e4939ac-68c8-46d8-af2f-64ce957ef21d" />
 
-Baseline Performance
-
-Logistic Regression: Micro F1: 0.5487, Macro F1: 0.5551, Hamming Loss: 0.1097.
-
-Linear SVC: Micro F1: 0.5532, Hamming Loss: 0.01065 (stongest baseline)
-
-BERT Model Performance
-
-Micro F1: 0.5930 (highest accuracy)
-
-Hamming Loss: 0.0834 (lowest error rate < 8.5%).
-
-Superior in capturing nuances; reduced ambiguities (e.g., 'sadness' vs 'fear').
-
-#Diagnostics:
-
-Common misclassifications: Overlaps in linguistic expressions; short/ambiguous texts as 'neutral'.
-
-Hyperparameter Tuning: Early stopping after ~5 epochs to prevent overfitting.
-
-Met success threshold; ready for deployment.
+```
+Testing single predictions:
+'I'm absolutely thrilled with this amazing result!...' → [np.str_('joy_mapped')]
+'This is disgusting and makes me so angry...' → [np.str_('disgust_mapped')]
+'I feel scared and nervous about what might happen ...' → [np.str_('fear_mapped')]
+'What a pleasant surprise! I didn't expect this...' → [np.str_('surprise_mapped')]
+'I'm feeling pretty neutral about this situation...' → [np.str_('neutral_mapped')]
+```
+The model was able to predict unseen data into the correct emotions.
 
 # Recommendations
 
@@ -151,7 +142,7 @@ Document Ambiguities: Analyze top co-occuring emotion pairs for UX insights.
 
 # Conclusion
 
-The BERT model forms a stable foundation with real performance (Micro F1: 0.5930, Hamming Loss: 0.0834). AfyaMind is an intelligent asset for digital mental health, ready for frontline deployment. Recommend approving Phase 1 actions for reliability, cost reduction, and mission fulfillment.
+The RoBERTA model forms a stable foundation with real performance (Micro F1: 0.5930, Hamming Loss: 0.0834). AfyaMind is an intelligent asset for digital mental health, ready for frontline deployment. Recommend approving Phase 1 actions for reliability, cost reduction, and mission fulfillment.
 
 
     
