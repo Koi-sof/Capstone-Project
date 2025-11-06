@@ -118,6 +118,9 @@ The RoBERTA model is superior in capturing nuance emotions(e.g., 'sadness' vs 'f
 
 <img width="411" height="317" alt="image" src="https://github.com/user-attachments/assets/4e4939ac-68c8-46d8-af2f-64ce957ef21d" />
 
+
+<img width="539" height="415" alt="image" src="https://github.com/user-attachments/assets/610e9ec9-33a1-4e3f-9e93-1ba2bc4bb492" />
+
 ```
 Testing single predictions:
 'I'm absolutely thrilled with this amazing result!...' → [np.str_('joy_mapped')]
